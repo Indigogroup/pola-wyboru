@@ -1,0 +1,219 @@
+/**
+ * Pola Wyboru - Public Styles
+ */
+
+/* Configurator Container */
+.pola-wyboru-configurator {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+}
+
+.pola-wyboru-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Form Fields */
+.pola-wyboru-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pola-wyboru-field label {
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+}
+
+.required {
+  color: #d32f2f;
+  margin-left: 4px;
+}
+
+/* Select Elements */
+.pola-wyboru-select {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 14px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.pola-wyboru-select:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+/* Radio Groups */
+.pola-wyboru-radio-group {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.pola-wyboru-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.pola-wyboru-radio {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: #4CAF50;
+}
+
+/* Checkboxes */
+.pola-wyboru-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-weight: normal;
+}
+
+.pola-wyboru-checkbox {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: #4CAF50;
+}
+
+/* Textareas */
+.pola-wyboru-textarea {
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+  transition: border-color 0.2s ease;
+}
+
+.pola-wyboru-textarea:focus {
+  outline: none;
+  border-color: #4CAF50;
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+/* Conditional Fields */
+.pola-wyboru-custom-colorimetry-field,
+.pola-wyboru-custom-size-field {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #fff;
+  border-left: 3px solid #4CAF50;
+}
+
+/* Help Text */
+.pola-wyboru-help-text {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #666;
+}
+
+.pola-wyboru-help-text a {
+  color: #0073aa;
+  text-decoration: none;
+}
+
+.pola-wyboru-help-text a:hover {
+  text-decoration: underline;
+}
+
+/* Heel Selector */
+.pola-wyboru-heel-selector {
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 15px;
+}
+
+/* Sole Type */
+.pola-wyboru-sole-type .pola-wyboru-radio-group {
+  margin-top: 8px;
+}
+
+/* Shoe Width */
+.pola-wyboru-shoe-width {
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Toe Cushion */
+.pola-wyboru-toe-cushion .pola-wyboru-radio-group {
+  margin-top: 8px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* Custom Options */
+.pola-wyboru-custom-colorimetry,
+.pola-wyboru-custom-size {
+  padding-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pola-wyboru-configurator {
+    padding: 15px;
+  }
+
+  .pola-wyboru-form {
+    gap: 12px;
+  }
+
+  .pola-wyboru-radio-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .pola-wyboru-select,
+  .pola-wyboru-textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+}
+
+/* Loading State */
+.pola-wyboru-loading .pola-wyboru-select,
+.pola-wyboru-loading .pola-wyboru-form button {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Error States */
+.pola-wyboru-error {
+  color: #d32f2f;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+.pola-wyboru-field.is-error .pola-wyboru-select,
+.pola-wyboru-field.is-error .pola-wyboru-textarea {
+  border-color: #d32f2f;
+}
+
+/* Success Message */
+.pola-wyboru-success-message {
+  padding: 12px 15px;
+  margin-bottom: 15px;
+  background-color: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 3px;
+  color: #155724;
+  display: none;
+}
+
+.pola-wyboru-success-message.visible {
+  display: block;
+}
