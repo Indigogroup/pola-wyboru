@@ -25,21 +25,24 @@ $current_custom_colorimetry_enabled = Pola_Wyboru_Session_Manager::get_custom_co
 $current_custom_colorimetry_text = Pola_Wyboru_Session_Manager::get_custom_colorimetry_text();
 $current_custom_size_enabled = Pola_Wyboru_Session_Manager::get_custom_size_enabled();
 $current_custom_size_text = Pola_Wyboru_Session_Manager::get_custom_size_text();
+$current_heel_height = Pola_Wyboru_Session_Manager::get_heel_height();
 ?>
 <div class="pola-wyboru-configurator pola-wyboru-product-<?php echo esc_attr( $product_id ); ?>">
-	<div class="pola-wyboru-form pola-wyboru-form-content">
+	<fieldset id="pola_wyboru_form" class="pola-wyboru-form">
+		<legend class="sr-only"><?php esc_html_e( 'Product Configuration', 'pola_wyboru' ); ?></legend>
+
 		<!-- Heel Height Selector -->
 		<div class="pola-wyboru-field pola-wyboru-heel-selector">
 			<label for="pola_wyboru_heel_height">
 				<?php esc_html_e( 'Heel Height', 'pola_wyboru' ); ?>
 				<span class="required">*</span>
 			</label>
-			<select id="pola_wyboru_heel_height" class="pola-wyboru-select pola-wyboru-heel-height" name="pola_wyboru_heel_height" required>
+			<select id="pola_wyboru_heel_height" class="pola-wyboru-select pola-wyboru-heel-height" name="pola_wyboru_config[heel_height]" required>
 				<option value=""><?php esc_html_e( 'Select heel height', 'pola_wyboru' ); ?></option>
 				<?php
 				foreach ( $heel_options as $value => $label ) {
 					?>
-					<option value="<?php echo esc_attr( $value ); ?>">
+					<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $current_heel_height, $value ); ?>>
 						<?php echo esc_html( $label ); ?>
 					</option>
 					<?php
@@ -169,7 +172,8 @@ $current_custom_size_text = Pola_Wyboru_Session_Manager::get_custom_size_text();
 			</p>
 		</div>
 
-		<!-- Hidden product ID for nonce verification -->
+		<!-- Hidden fields for form data submission -->
 		<input type="hidden" name="pola_wyboru_product_id" value="<?php echo esc_attr( $product_id ); ?>" />
-	</div>
+		<?php wp_nonce_field( 'pola_wyboru_nonce', 'pola_wyboru_nonce' ); ?>
+	</fieldset>
 </div>
