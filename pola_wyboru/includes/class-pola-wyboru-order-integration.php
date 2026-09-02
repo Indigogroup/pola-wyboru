@@ -42,7 +42,25 @@ class Pola_Wyboru_Order_Integration {
 			return $cart_item_data;
 		}
 
-		$config = array_map( 'sanitize_text_field', wp_unslash( $_POST['pola_wyboru_config'] ) );
+		// Validate that configuration is an array
+		$config_raw = wp_unslash( $_POST['pola_wyboru_config'] );
+		if ( ! is_array( $config_raw ) ) {
+			return $cart_item_data;
+		}
+
+		// Sanitize configuration with field-specific methods
+		$config = array();
+		foreach ( $config_raw as $key => $value ) {
+			$key = sanitize_key( $key );
+			// Use different sanitization based on field type
+			if ( in_array( $key, array( 'custom_colorimetry_text', 'custom_size_text' ), true ) ) {
+				$config[ $key ] = sanitize_textarea_field( $value );
+			} elseif ( in_array( $key, array( 'custom_colorimetry_enabled', 'custom_size_enabled' ), true ) ) {
+				$config[ $key ] = (bool) $value;
+			} else {
+				$config[ $key ] = sanitize_text_field( $value );
+			}
+		}
 
 		$cart_item_data['pola_wyboru_config'] = $config;
 
@@ -62,6 +80,13 @@ class Pola_Wyboru_Order_Integration {
 		}
 
 		$config = $cart_item['pola_wyboru_config'];
+
+		if ( ! empty( $config['heel_height'] ) ) {
+			$item_data[] = array(
+				'key'   => __( 'Heel Height', 'pola_wyboru' ),
+				'value' => $config['heel_height'],
+			);
+		}
 
 		if ( ! empty( $config['sole_type'] ) ) {
 			$item_data[] = array(
@@ -115,6 +140,10 @@ class Pola_Wyboru_Order_Integration {
 		}
 
 		$config = $values['pola_wyboru_config'];
+
+		if ( ! empty( $config['heel_height'] ) ) {
+			$item->add_meta_data( '_pola_wyboru_heel_height', $config['heel_height'] );
+		}
 
 		if ( ! empty( $config['sole_type'] ) ) {
 			$item->add_meta_data( '_pola_wyboru_sole_type', $config['sole_type'] );
