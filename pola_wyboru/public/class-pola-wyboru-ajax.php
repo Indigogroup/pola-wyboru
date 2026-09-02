@@ -39,7 +39,7 @@ class Pola_Wyboru_AJAX {
 			wp_send_json_error( __( 'Missing required parameters', 'pola_wyboru' ) );
 		}
 
-		$product_id    = intval( $_POST['product_id'] );
+		$product_id    = intval( wp_unslash( $_POST['product_id'] ) );
 		$heel_height   = sanitize_text_field( wp_unslash( $_POST['heel_height'] ) );
 		$current_product = wc_get_product( $product_id );
 
@@ -62,9 +62,20 @@ class Pola_Wyboru_AJAX {
 			wp_send_json_error( __( 'Product with selected heel height not found', 'pola_wyboru' ) );
 		}
 
-		// Save configuration to session
-		if ( isset( $_POST['configuration'] ) ) {
-			$config = array_map( 'sanitize_text_field', wp_unslash( $_POST['configuration'] ) );
+		// Save configuration to session - handle both array and individual values
+		if ( isset( $_POST['configuration'] ) && is_array( $_POST['configuration'] ) ) {
+			$config = array();
+			foreach ( wp_unslash( $_POST['configuration'] ) as $key => $value ) {
+				$key = sanitize_key( $key );
+				// Use different sanitization based on field type
+				if ( in_array( $key, array( 'custom_colorimetry_text', 'custom_size_text' ), true ) ) {
+					$config[ $key ] = sanitize_textarea_field( $value );
+				} elseif ( in_array( $key, array( 'custom_colorimetry_enabled', 'custom_size_enabled' ), true ) ) {
+					$config[ $key ] = (bool) $value;
+				} else {
+					$config[ $key ] = sanitize_text_field( $value );
+				}
+			}
 			Pola_Wyboru_Session_Manager::set_config( $config );
 		}
 
