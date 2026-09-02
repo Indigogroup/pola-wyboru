@@ -22,7 +22,6 @@ class Pola_Wyboru_Admin_Settings {
 	 */
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
-		add_action( 'wp_ajax_pola_wyboru_update_heel_names', array( $this, 'ajax_update_heel_names' ) );
 	}
 
 	/**
@@ -94,14 +93,15 @@ class Pola_Wyboru_Admin_Settings {
 				<tbody>
 					<?php
 					foreach ( $heel_terms as $term ) {
-						$display_name = isset( $heel_display_names[ $term->slug ] ) ? $heel_display_names[ $term->slug ] : '';
+						// Key by term name (display value) to match how display names are stored
+						$display_name = isset( $heel_display_names[ $term->name ] ) ? $heel_display_names[ $term->name ] : '';
 						?>
 						<tr>
 							<td><?php echo esc_html( $term->name ); ?></td>
 							<td>
 								<input
 									type="text"
-									name="pola_wyboru_heel_display_names[<?php echo esc_attr( $term->slug ); ?>]"
+									name="pola_wyboru_heel_display_names[<?php echo esc_attr( $term->name ); ?>]"
 									value="<?php echo esc_attr( $display_name ); ?>"
 									class="regular-text"
 									placeholder="<?php echo esc_attr( $term->name ); ?>"
@@ -137,28 +137,5 @@ class Pola_Wyboru_Admin_Settings {
 		}
 
 		return $sanitized;
-	}
-
-	/**
-	 * AJAX update heel names
-	 */
-	public function ajax_update_heel_names() {
-		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( __( 'Insufficient permissions', 'pola_wyboru' ) );
-		}
-
-		if ( ! isset( $_POST['nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nonce'] ) ), 'pola_wyboru_admin_nonce' ) ) {
-			wp_send_json_error( __( 'Invalid nonce', 'pola_wyboru' ) );
-		}
-
-		if ( ! isset( $_POST['heel_names'] ) ) {
-			wp_send_json_error( __( 'Missing heel names data', 'pola_wyboru' ) );
-		}
-
-		$heel_names = array_map( 'sanitize_text_field', wp_unslash( $_POST['heel_names'] ) );
-
-		Pola_Wyboru_Configurator::update_heel_display_names( $heel_names );
-
-		wp_send_json_success( __( 'Heel display names updated successfully.', 'pola_wyboru' ) );
 	}
 }
