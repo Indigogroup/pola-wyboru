@@ -89,6 +89,24 @@ class Pola_Wyboru_Session_Manager {
 	}
 
 	/**
+	 * Get heel height
+	 *
+	 * @return string|null Heel height value.
+	 */
+	public static function get_heel_height() {
+		return self::get( 'heel_height' );
+	}
+
+	/**
+	 * Set heel height
+	 *
+	 * @param string $value Heel height value.
+	 */
+	public static function set_heel_height( $value ) {
+		self::set( 'heel_height', sanitize_text_field( $value ) );
+	}
+
+	/**
 	 * Get sole type
 	 *
 	 * @return string|null Sole type value.
