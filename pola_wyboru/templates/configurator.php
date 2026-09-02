@@ -135,7 +135,7 @@ $current_custom_size_text = Pola_Wyboru_Session_Manager::get_custom_size_text();
 					/>
 					<?php esc_html_e( 'Custom Color', 'pola_wyboru' ); ?>
 				</label>
-				<div class="pola-wyboru-custom-colorimetry-field" style="display: <?php echo $current_custom_colorimetry_enabled ? 'block' : 'none'; };">
+				<div class="pola-wyboru-custom-colorimetry-field" style="display: <?php echo esc_attr( $current_custom_colorimetry_enabled ? 'block' : 'none' ); ?>;">
 					<textarea
 						name="pola_wyboru_config[custom_colorimetry_text]"
 						class="pola-wyboru-textarea"
@@ -157,7 +157,7 @@ $current_custom_size_text = Pola_Wyboru_Session_Manager::get_custom_size_text();
 					/>
 					<?php esc_html_e( 'Custom Size', 'pola_wyboru' ); ?>
 				</label>
-				<div class="pola-wyboru-custom-size-field" style="display: <?php echo $current_custom_size_enabled ? 'block' : 'none'; };">
+				<div class="pola-wyboru-custom-size-field" style="display: <?php echo esc_attr( $current_custom_size_enabled ? 'block' : 'none' ); ?>;">
 					<textarea
 						name="pola_wyboru_config[custom_size_text]"
 						class="pola-wyboru-textarea"
@@ -166,7 +166,7 @@ $current_custom_size_text = Pola_Wyboru_Session_Manager::get_custom_size_text();
 					><?php echo esc_textarea( $current_custom_size_text ); ?></textarea>
 				</div>
 				<p class="pola-wyboru-help-text">
-					<a href="/tabela-rozmiarow/" target="_blank" rel="noopener noreferrer">
+					<a href="<?php echo esc_url( home_url( '/tabela-rozmiarow/' ) ); ?>" target="_blank" rel="noopener noreferrer">
 						<?php esc_html_e( 'View foot measurement chart', 'pola_wyboru' ); ?>
 					</a>
 				</p>
